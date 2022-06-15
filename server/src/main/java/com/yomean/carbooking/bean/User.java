@@ -23,4 +23,7 @@ public class User {
     @ApiModelProperty("roll")
     private int roll;
 
+    @ApiModelProperty("status")
+    private int status;
+
 }

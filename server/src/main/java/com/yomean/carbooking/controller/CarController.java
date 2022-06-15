@@ -1,7 +1,9 @@
 package com.yomean.carbooking.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.yomean.carbooking.bean.Car;
 import com.yomean.carbooking.bean.condition.CarQC;
+import com.yomean.carbooking.common.PageParam;
 import com.yomean.carbooking.common.ReturnMessage;
 import com.yomean.carbooking.service.CarService;
 import io.swagger.annotations.Api;
@@ -35,7 +37,7 @@ public class CarController {
 
     @GetMapping("/list")
     @ApiOperation("query car")
-    public ReturnMessage<List<Car>> queryCars(CarQC qc){
-        return ReturnMessage.success(carService.queryCars(qc));
+    public ReturnMessage<PageInfo<Car>> queryCars(CarQC qc, PageParam page){
+        return ReturnMessage.success(carService.queryCars(qc, page));
     }
 }

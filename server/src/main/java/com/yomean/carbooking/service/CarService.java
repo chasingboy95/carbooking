@@ -1,36 +1,19 @@
 package com.yomean.carbooking.service;
 
+import com.github.pagehelper.PageInfo;
 import com.yomean.carbooking.bean.Car;
 import com.yomean.carbooking.bean.condition.CarQC;
-import com.yomean.carbooking.dao.CarDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.yomean.carbooking.common.PageParam;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-
 @Service
-public class CarService {
+public interface CarService {
 
-    @Autowired
-    private CarDao carDao;
+    boolean addCar(Car car);
 
-    public boolean addCar(Car car) {
-        return carDao.addCar(car) > 0;
-    }
+    boolean updateCar(Car car);
 
-    public boolean updateCar(Car car){
-        if (Objects.isNull(car.getId())){
-            throw new RuntimeException();
-        }
-        return carDao.updateCar(car)>0;
-    }
+    PageInfo<Car> queryCars(CarQC qc, PageParam page);
 
-    public List<Car> queryCars(CarQC qc){
-        return carDao.query(qc);
-    }
-
-    public Car getById(Long id){
-        return carDao.getByIdInShareMode(id);
-    }
+    Car getById(Long id);
 }
