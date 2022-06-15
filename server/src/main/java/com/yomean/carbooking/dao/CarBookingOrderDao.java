@@ -14,4 +14,6 @@ public interface CarBookingOrderDao {
     int update(CarBookingOrder order);
 
     List<CarBookingOrder> query(CarBookingOrderQC qc);
+
+    CarBookingOrder getById(Long id);
 }

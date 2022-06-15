@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @ApiModel("Car entity")
@@ -29,6 +30,6 @@ public class Car {
     private Integer status;
 
     @ApiModelProperty("added time")
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
 }

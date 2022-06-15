@@ -33,7 +33,7 @@ public class CarController {
         return ReturnMessage.success();
     }
 
-    @GetMapping
+    @GetMapping("/list")
     @ApiOperation("query car")
     public ReturnMessage<List<Car>> queryCars(CarQC qc){
         return ReturnMessage.success(carService.queryCars(qc));

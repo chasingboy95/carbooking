@@ -10,6 +10,9 @@
     <update id="update" parameterType="com.yomean.carbooking.bean.CarBookingOrder">
         update car_booking_order
         <set>
+            <if test="estimatedEndTime!=null">
+                estimated_end_time = #{estimatedEndTime}
+            </if>
             <if test="actualEndTime!=null">
                 actual_end_time = #{actualEndTime}
             </if>
@@ -37,6 +40,12 @@
                 and status = #{status}
             </if>
         </where>
+    </select>
+
+    <select id="getById" resultType="com.yomean.carbooking.bean.CarBookingOrder">
+        select id, carId, userId, startTime, estimatedEndTime, actualEndTime, status
+        from car_booking_order
+        where id = #{id} lock in share mode
     </select>
 
 </mapper>

@@ -29,4 +29,8 @@ public class CarService {
     public List<Car> queryCars(CarQC qc){
         return carDao.query(qc);
     }
+
+    public Car getById(Long id){
+        return carDao.getByIdInShareMode(id);
+    }
 }

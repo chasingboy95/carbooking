@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @ApiModel("car booking order")
@@ -15,11 +16,11 @@ public class CarBookingOrder {
 
     private Long userId;
 
-    private Timestamp startTime;
+    private LocalDateTime startTime;
 
-    private Timestamp estimatedEndTime;
+    private LocalDateTime estimatedEndTime;
 
-    private Timestamp actualEndTime;
+    private LocalDateTime actualEndTime;
 
     private int status;
 }

@@ -14,4 +14,6 @@ public interface CarDao {
     int updateCar(Car car);
 
     List<Car> query(CarQC qc);
+
+    Car getByIdInShareMode(Long id);
 }
