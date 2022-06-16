@@ -1,5 +1,5 @@
 <template>
-    <div class="carList">
+    <div class="order-list">
         <Table :columns="tableHeader" :data="tableData">
             <template slot-scope="{ row, index }" slot="status">
                 {{ statusMap[row.status || 0] }}
@@ -77,4 +77,9 @@ export default {
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.order-list {
+  widows: 95%;
+  padding-right: 3vw;
+}
+</style>

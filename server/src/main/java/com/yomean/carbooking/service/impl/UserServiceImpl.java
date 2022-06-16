@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(ReturnCode.EMPTY_ID_OR_PASSWORD);
         }
         if (!userDao.checkPassword(user.getId(), user.getPassword())) {
-            throw new ServiceException(ReturnCode.INVALID_PASSWORD);
+            throw new ServiceException(ReturnCode.INVALID_ID_OR_PASSWORD);
         }
         UserToken userToken = userTokenService.getByUserId(user.getId());
         LocalDateTime updateTime = LocalDateTime.now();

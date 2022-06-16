@@ -8,8 +8,9 @@
     </select>
 
     <select id="checkPassword" resultType="java.lang.Boolean">
-        select password = #{password}
+        select count(*)
         from user
-        where id = id;
+        where id = #{id}
+        and password = #{password};
     </select>
 </mapper>

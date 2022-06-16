@@ -10,7 +10,7 @@ public enum ReturnCode {
     EMPTY_USER(1002, "user info can't be empty"),
     EMPTY_CAR(1003, "car info can't be empty"),
     FINISHED_ORDER(1004, "finished order can't be modify"),
-    INVALID_PASSWORD(1005, "invalid password"),
+    INVALID_ID_OR_PASSWORD(1005, "invalid id or password"),
     NOT_LOGIN(1006, "not login"),
     TIME_IS_BEFORE_NOW(1007, "time can't before now"),
     START_TIME_IS_AFTER_END_TIME(1008, "start time can't after end time"),

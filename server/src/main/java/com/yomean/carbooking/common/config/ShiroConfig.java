@@ -3,6 +3,7 @@ package com.yomean.carbooking.common.config;
 
 import com.yomean.carbooking.common.shiro.OAuth2Filter;
 import com.yomean.carbooking.common.shiro.OAuth2Realm;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.mgt.SessionsSecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;

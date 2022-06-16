@@ -1,0 +1,16 @@
+com\yomean\carbooking\bean\CarBrand.class
+com\yomean\carbooking\common\shiro\TokenGenerator.class
+com\yomean\carbooking\service\CarService.class
+com\yomean\carbooking\service\CarBrandService.class
+com\yomean\carbooking\bean\User.class
+com\yomean\carbooking\dao\CarBrandDao.class
+com\yomean\carbooking\bean\CarBookingOrder.class
+com\yomean\carbooking\common\ReturnCode.class
+com\yomean\carbooking\common\ReturnMessage.class
+com\yomean\carbooking\bean\condition\CarQC.class
+com\yomean\carbooking\dao\CarDao.class
+com\yomean\carbooking\service\impl\CarServiceImpl.class
+com\yomean\carbooking\service\UserService.class
+com\yomean\carbooking\controller\UserController.class
+com\yomean\carbooking\common\PageParam.class
+com\yomean\carbooking\bean\Car.class
