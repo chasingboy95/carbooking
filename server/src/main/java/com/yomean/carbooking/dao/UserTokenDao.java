@@ -16,8 +16,6 @@ public interface UserTokenDao {
 
     int updateUserToken(UserToken userToken);
 
-    int deleteByUserId(Long UserId);
-
     UserToken getByUserId(Long UserId);
 
     UserToken getByToken(String token);

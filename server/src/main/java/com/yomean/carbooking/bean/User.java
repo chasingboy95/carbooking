@@ -20,8 +20,8 @@ public class User {
     @ApiModelProperty("password")
     private String password;
 
-    @ApiModelProperty("roll")
-    private int roll;
+    @ApiModelProperty("role")
+    private int role;
 
     @ApiModelProperty("status")
     private int status;

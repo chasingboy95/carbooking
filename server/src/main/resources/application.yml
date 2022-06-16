@@ -16,3 +16,9 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countsql
+logging:
+  level:
+    com:
+      yomean:
+        carbooking:
+          dao: debug

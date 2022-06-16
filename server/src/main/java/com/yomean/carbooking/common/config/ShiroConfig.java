@@ -3,7 +3,6 @@ package com.yomean.carbooking.common.config;
 
 import com.yomean.carbooking.common.shiro.OAuth2Filter;
 import com.yomean.carbooking.common.shiro.OAuth2Realm;
-import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.mgt.SessionsSecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -56,7 +55,7 @@ public class ShiroConfig {
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/druid/**", "anon");
         filterMap.put("/app/**", "anon");
-        filterMap.put("/sys/login", "anon");
+        filterMap.put("/login", "anon");
         filterMap.put("/swagger/**", "anon");
         filterMap.put("/v2/api-docs", "anon");
         filterMap.put("/swagger-ui.html", "anon");

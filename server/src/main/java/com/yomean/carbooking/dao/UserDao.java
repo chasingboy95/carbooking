@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserDao {
 
     User getById(Long id);
+
+    boolean checkPassword(Long id, String password);
 }

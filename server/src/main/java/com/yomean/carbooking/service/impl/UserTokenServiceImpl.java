@@ -30,11 +30,6 @@ public class UserTokenServiceImpl implements UserTokenService {
     }
 
     @Override
-    public void deleteByUserId(Long userId) {
-        userTokenDao.deleteByUserId(userId);
-    }
-
-    @Override
     public UserToken getByUserId(Long userId) {
         return userTokenDao.getByUserId(userId);
     }

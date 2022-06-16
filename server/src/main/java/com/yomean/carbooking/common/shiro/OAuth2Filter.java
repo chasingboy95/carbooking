@@ -1,6 +1,9 @@
 package com.yomean.carbooking.common.shiro;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yomean.carbooking.common.ReturnCode;
+import com.yomean.carbooking.common.ReturnMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -21,9 +24,11 @@ import java.io.IOException;
  */
 public class OAuth2Filter extends AuthenticatingFilter {
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
-        //获取请求token
+        //get request token
         String token = getRequestToken((HttpServletRequest) request);
 
         if (StringUtils.isBlank(token)) {
@@ -34,8 +39,7 @@ public class OAuth2Filter extends AuthenticatingFilter {
     }
 
     /**
-     * 判断用户是否已经登录，
-     * 如果是options的请求则放行，否则进行调用onAccessDenied进行token认证流程
+     * isLogin?
      *
      * @param request
      * @param response
@@ -53,16 +57,15 @@ public class OAuth2Filter extends AuthenticatingFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        //获取请求token，如果token不存在，直接返回401
+        //get token and check
         String token = getRequestToken((HttpServletRequest) request);
         if (StringUtils.isBlank(token)) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
             httpResponse.setHeader("Access-Control-Allow-Origin", "*");
 
-            String json = "invalid token";
-
-            httpResponse.getWriter().print(json);
+            ReturnMessage<Object> message = ReturnMessage.fail(ReturnCode.NOT_LOGIN);
+            httpResponse.getWriter().print(objectMapper.writeValueAsString(message));
 
             return false;
         }
@@ -77,9 +80,9 @@ public class OAuth2Filter extends AuthenticatingFilter {
         httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpResponse.setHeader("Access-Control-Allow-Origin", "*");
         try {
-            //处理登录失败的异常
-            String json = "login failed";
-            httpResponse.getWriter().print(json);
+            //login failed
+            ReturnMessage<Object> message = ReturnMessage.fail(ReturnCode.NOT_LOGIN);
+            httpResponse.getWriter().print(objectMapper.writeValueAsString(message));
         } catch (IOException e1) {
 
         }
@@ -91,10 +94,10 @@ public class OAuth2Filter extends AuthenticatingFilter {
      * 获取请求的token
      */
     private String getRequestToken(HttpServletRequest httpRequest) {
-        //从header中获取token
+        //get token
         String token = httpRequest.getHeader("token");
 
-        //如果header中不存在token，则从参数中获取token
+        //empty token try from params
         if (StringUtils.isBlank(token)) {
             token = httpRequest.getParameter("token");
         }

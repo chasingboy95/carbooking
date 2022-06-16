@@ -36,11 +36,7 @@ public class ReturnMessage<T> {
     }
 
     public static <T> ReturnMessage<T> success(T data) {
-        return new ReturnMessage<>(200, data);
-    }
-
-    public static <T> ReturnMessage<T> success(String message) {
-        return new ReturnMessage<>(200, message);
+        return new ReturnMessage<>(200, "success", data);
     }
 
     public static <T> ReturnMessage<T> success(String message, T data) {

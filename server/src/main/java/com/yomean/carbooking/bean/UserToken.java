@@ -1,9 +1,12 @@
 package com.yomean.carbooking.bean;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @Author hym
@@ -12,16 +15,20 @@ import java.util.Date;
  * @Description
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserToken implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Long id;
     //用户ID
     private Long userId;
     //token
     private String token;
     //过期时间
-    private Date expireTime;
+    private LocalDateTime expireTime;
     //更新时间
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
 }

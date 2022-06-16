@@ -14,8 +14,6 @@ public interface UserTokenService {
 
     void updateUserToken(UserToken userToken);
 
-    void deleteByUserId(Long userId);
-
     UserToken getByUserId(Long userId);
 
     UserToken getByToken(String token);

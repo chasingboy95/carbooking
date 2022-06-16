@@ -2,6 +2,7 @@ package com.yomean.carbooking.dao;
 
 import com.yomean.carbooking.bean.CarBookingOrder;
 import com.yomean.carbooking.bean.condition.CarBookingOrderQC;
+import com.yomean.carbooking.bean.vo.CarBookingOrderVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface CarBookingOrderDao {
     List<CarBookingOrder> query(CarBookingOrderQC qc);
 
     CarBookingOrder getById(Long id);
+
+    List<CarBookingOrderVo> getOrderVoByUserId(Long userId);
 }

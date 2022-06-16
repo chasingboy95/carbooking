@@ -8,4 +8,8 @@ public interface UserService {
 
     User getById(Long id);
 
+    String login(User user);
+
+    void logout(String token);
+
 }
