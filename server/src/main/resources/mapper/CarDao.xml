@@ -48,12 +48,6 @@
             <if test="id!=null">
                 and id = #{id}
             </if>
-            <if test="statusList!=null &amp;&amp; statusList.size()>0">
-                and status in
-                <foreach collection="statusList" open="(" close=")" separator="," item="status" index="i">
-                    #{status}
-                </foreach>
-            </if>
             <if test="name!=null">
                 and name like CONCAT(CONCAT('%', #{name}), '%')
             </if>

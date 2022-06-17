@@ -1,8 +1,9 @@
 package com.yomean.carbooking.bean.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 public class CarBookingOrderVo {
@@ -21,11 +22,14 @@ public class CarBookingOrderVo {
 
     private String plateNumber;
 
-    private LocalDateTime startTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate startTime;
 
-    private LocalDateTime estimatedEndTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate estimatedEndTime;
 
-    private LocalDateTime actualEndTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate actualEndTime;
 
     private int status;
 }

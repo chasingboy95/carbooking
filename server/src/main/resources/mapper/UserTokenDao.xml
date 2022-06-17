@@ -38,6 +38,7 @@
         select id, user_id, token, expire_time, update_time
         from user_token
         where token = #{token}
+        limit 1
     </select>
 
 </mapper>

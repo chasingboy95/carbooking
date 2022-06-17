@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,7 +37,7 @@ public class CarBookingServiceImpl implements CarBookingService {
      */
     @Transactional(rollbackFor = Exception.class)
     public boolean addBookingOrder(CarBookingOrder carBookingOrder) {
-        if (carBookingOrder.getEstimatedEndTime().isBefore(LocalDateTime.now())) {
+        if (carBookingOrder.getEstimatedEndTime().isBefore(LocalDate.now())) {
             throw new ServiceException(ReturnCode.START_TIME_IS_AFTER_END_TIME);
         }
         Car car = carService.getById(carBookingOrder.getCarId());
@@ -46,13 +48,12 @@ public class CarBookingServiceImpl implements CarBookingService {
         if (Objects.isNull(user)) {
             throw new ServiceException(ReturnCode.EMPTY_USER);
         }
-        if (car.getStatus() != 0) {
-            throw new ServiceException(ReturnCode.BEEN_BOOKED);
-        }
-        car.setStatus(1);
+//        if (car.getStatus() != 0) {
+//            throw new ServiceException(ReturnCode.BEEN_BOOKED);
+//        }
+//        car.setStatus(1);
         carService.updateCar(car);
         carBookingOrder.setStatus(1);
-        carBookingOrder.setStartTime(LocalDateTime.now());
         int add = carBookingOrderDao.add(carBookingOrder);
         return add > 0;
     }
@@ -65,7 +66,7 @@ public class CarBookingServiceImpl implements CarBookingService {
      */
     @Transactional(rollbackFor = Exception.class)
     public boolean updateBookingOrder(CarBookingOrder carBookingOrder) {
-        if (carBookingOrder.getEstimatedEndTime().isBefore(LocalDateTime.now())) {
+        if (carBookingOrder.getEstimatedEndTime().isBefore(LocalDate.now())) {
             throw new ServiceException(ReturnCode.TIME_IS_BEFORE_NOW);
         }
         CarBookingOrder bookingOrder = carBookingOrderDao.getById(carBookingOrder.getCarId());
@@ -89,9 +90,9 @@ public class CarBookingServiceImpl implements CarBookingService {
             throw new ServiceException(ReturnCode.FINISHED_ORDER);
         }
         bookingOrder.setStatus(2);
-        bookingOrder.setActualEndTime(LocalDateTime.now());
+        bookingOrder.setActualEndTime(LocalDate.now());
         carBookingOrderDao.update(bookingOrder);
-        car.setStatus(0);
+//        car.setStatus(0);
         carService.updateCar(car);
         return true;
     }
@@ -107,17 +108,41 @@ public class CarBookingServiceImpl implements CarBookingService {
     public double getBillById(Long id) {
         CarBookingOrder bookingOrder = carBookingOrderDao.getById(id);
         Car car = carService.getById(bookingOrder.getCarId());
-        LocalDateTime now = LocalDateTime.now();
-        if (now.isAfter(bookingOrder.getEstimatedEndTime())) {
-            return getDaysOfTwo(bookingOrder.getStartTime(), bookingOrder.getEstimatedEndTime()) * car.getPrice();
+        LocalDate now = LocalDate.now();
+        double bill;
+        if (now.isBefore(bookingOrder.getEstimatedEndTime())) {
+            bill = getDaysOfTwo(bookingOrder.getStartTime(), bookingOrder.getEstimatedEndTime()) * car.getPrice();
         } else {
-            return getDaysOfTwo(bookingOrder.getStartTime(), now) * car.getPrice();
+            bill = getDaysOfTwo(bookingOrder.getStartTime(), now) * car.getPrice();
         }
+        return (double) Math.round(bill * 100) / 100;
     }
 
     @Override
     public List<CarBookingOrderVo> getOrderVoByUserId(Long userId) {
         return carBookingOrderDao.getOrderVoByUserId(userId);
+    }
+
+    @Override
+    public List<CarBookingOrder> getOrderByCarId(Long carId) {
+        return carBookingOrderDao.getOrderByCarId(carId, LocalDate.now());
+    }
+
+
+    @Override
+    public List<LocalDate> getBookedData(Long carId) {
+        List<CarBookingOrder> orders = getOrderByCarId(carId);
+        HashSet<LocalDate> set = new HashSet<>();
+        orders.forEach(order -> {
+            LocalDate startTime = order.getStartTime();
+            LocalDate estimatedEndTime = order.getEstimatedEndTime();
+            while (startTime.isBefore(estimatedEndTime)) {
+                set.add(startTime);
+                startTime = startTime.plusDays(1);
+            }
+            set.add(startTime);
+        });
+        return new ArrayList<>(set);
     }
 
     /**
@@ -127,12 +152,9 @@ public class CarBookingServiceImpl implements CarBookingService {
      * @param end
      * @return
      */
-    private int getDaysOfTwo(LocalDateTime start, LocalDateTime end) {
-        Duration between = Duration.between(start, end);
-        int days = (int) between.toDays();
-        if (between.getSeconds() % 86400 > 0)
-            days += 1;
-        return days;
+    private int getDaysOfTwo(LocalDate start, LocalDate end) {
+        Period between = Period.between(start, end);
+        return between.getDays();
     }
 
 }

@@ -11,7 +11,5 @@ public class CarQC {
 
     private List<Long> idList;
 
-    private List<Integer> statusList;
-
     private String name;
 }

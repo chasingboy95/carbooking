@@ -45,7 +45,7 @@ public class CarBookingController {
         return ReturnMessage.success(carBookingService.getOrderVoByUserId(userId));
     }
 
-    @GetMapping("/finish")
+    @PutMapping("/{id}/finish")
     @ApiOperation("return car, finish order")
     public ReturnMessage<Void> finishOrder(@PathVariable("id") Long id) {
         carBookingService.finishRentalOrder(id);

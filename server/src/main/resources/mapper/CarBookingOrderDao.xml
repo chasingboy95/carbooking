@@ -38,12 +38,13 @@
                 estimated_end_time = #{estimatedEndTime}
             </if>
             <if test="actualEndTime!=null">
-                actual_end_time = #{actualEndTime}
+                , actual_end_time = #{actualEndTime}
             </if>
             <if test="status!=null">
-                status = #{status}
+                , status = #{status}
             </if>
         </set>
+        where id = #{id}
     </update>
 
     <select id="query" resultMap="carBookingOrderMap">
@@ -89,8 +90,18 @@
         left join car c on
         o.car_id = c.id
         where
-        o.user_id = #{userId}) t left join car_brand cb
+        o.user_id = #{userId}
+        ) t left join car_brand cb
         on t.brand_id = cb.id
+        order by id desc
+    </select>
+
+    <select id="getOrderByCarId" resultMap="carBookingOrderMap">
+        select id, car_id, user_id, start_time, estimated_end_time, actual_end_time, status
+        from car_booking_order
+        where car_id = #{carId}
+        and status = 1
+        and (start_time >= #{startDate} or estimated_end_time >= #{startDate})
     </select>
 
 </mapper>

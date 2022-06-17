@@ -3,6 +3,7 @@ package com.yomean.carbooking.service;
 import com.yomean.carbooking.bean.CarBookingOrder;
 import com.yomean.carbooking.bean.vo.CarBookingOrderVo;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CarBookingService {
@@ -16,5 +17,9 @@ public interface CarBookingService {
     double getBillById(Long id);
 
     List<CarBookingOrderVo> getOrderVoByUserId(Long userId);
+
+    List<CarBookingOrder> getOrderByCarId(Long carId);
+
+    List<LocalDate> getBookedData(Long carId);
 
 }

@@ -5,6 +5,7 @@ import com.yomean.carbooking.bean.condition.CarBookingOrderQC;
 import com.yomean.carbooking.bean.vo.CarBookingOrderVo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
@@ -19,4 +20,6 @@ public interface CarBookingOrderDao {
     CarBookingOrder getById(Long id);
 
     List<CarBookingOrderVo> getOrderVoByUserId(Long userId);
+
+    List<CarBookingOrder> getOrderByCarId(Long carId, LocalDate startDate);
 }

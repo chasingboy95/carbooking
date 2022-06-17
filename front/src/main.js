@@ -17,3 +17,13 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+router.beforeEach((to, from, next) => {
+  const token = sessionStorage.getItem('token')
+  if (token) {
+    next()
+  } else {
+    window.location.href = '#/login'
+    next()
+  }
+})

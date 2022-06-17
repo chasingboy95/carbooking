@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Menu :theme="theme3" active-name="/cars" @on-select="changeRouter">
+        <Menu :theme="theme3" active-name="/orders" @on-select="changeRouter">
             <MenuGroup title="Menu">
                 <MenuItem name="/orders">
                     <Icon type="md-document" />

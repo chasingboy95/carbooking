@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import LayOut from '@/components/layout'
-import CarList from '@/components/CarList'
-import OrderList from '@/components/OrderList'
-import Login from '@/components/Login'
+import CarList from '@/components/carList'
+import OrderList from '@/components/orderList'
+import Login from '@/components/login'
 import AddOrder from '@/components/addOrder'
 
 Vue.use(Router)

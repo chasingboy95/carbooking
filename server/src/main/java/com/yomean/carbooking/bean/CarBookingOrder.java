@@ -1,10 +1,10 @@
 package com.yomean.carbooking.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @ApiModel("car booking order")
@@ -16,11 +16,14 @@ public class CarBookingOrder {
 
     private Long userId;
 
-    private LocalDateTime startTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate startTime;
 
-    private LocalDateTime estimatedEndTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate estimatedEndTime;
 
-    private LocalDateTime actualEndTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate actualEndTime;
 
     private int status;
 }

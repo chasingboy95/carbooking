@@ -1,13 +1,21 @@
 <template>
-  <div class="car-list">
-    <Table :columns="tableHeader"
-           :data="tableData">
-      <template slot-scope="{ row, index }"
-                slot="status">
-        {{ statusMap[row.status || 0] }}
-      </template>
-    </Table>
-  </div>
+    <div class="car-list">
+        <Table :columns="tableHeader" :data="tableData">
+            <template slot-scope="{ row, index }" slot="status">
+                {{ statusMap[row.status || 0] }}
+            </template>
+            <template slot-scope="{ row, index }" slot="action">
+                <!-- <Button size="small">Default</Button> -->
+                <Button
+                    type="primary"
+                    size="small"
+                    @click="booking(row)"
+                    :disabled="row.status > 0"
+                    >Booking</Button
+                >
+            </template>
+        </Table>
+    </div>
 </template>
 
 // <script type="text/javascript" src="iview.min.js"></script>
@@ -15,98 +23,72 @@
 import { getCarList } from '@/apis/car.js'
 
 export default {
-  name: 'CarList',
-  data () {
-    return {
-      tableHeader: [
-        {
-          title: 'ID',
-          key: 'id'
-        },
-        {
-          title: 'car name',
-          key: 'name'
-        },
-        {
-          title: 'plate number',
-          key: 'plateNumber'
-        },
-        {
-          title: 'status',
-          key: 'status',
-          slot: 'status',
-        },
-        {
-          title: 'operation',
-          key: 'action',
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
+    name: 'CarList',
+    data() {
+        return {
+            tableHeader: [
+                {
+                    title: 'ID',
+                    key: 'id'
                 },
-                style: {
-                  marginRight: '5px'
+                {
+                    title: 'car name',
+                    key: 'name'
                 },
-                on: {
-                  click: () => {
-                    this.detail(params.index)
-                  }
+                {
+                    title: 'plate number',
+                    key: 'plateNumber'
+                },
+                {
+                    title: 'status',
+                    key: 'status',
+                    slot: 'status'
+                },
+                {
+                    title: 'operation',
+                    key: 'action',
+                    align: 'center',
+                    slot: 'action'
                 }
-              }, 'detail'),
-              h('Button', {
-                props: {
-                  type: 'success',
-                  size: 'small',
-                  disabled: this.tableData[params.index].status !== 0
-                },
-                on: {
-                  click: () => {
-                    this.booking(params.index)
-                  }
-                }
-              }, 'booking')
-            ])
-          }
+            ],
+            tableData: [],
+            statusMap: {
+                0: 'available',
+                1: 'renting',
+                2: 'in maintenance'
+            }
         }
-      ],
-      tableData: [],
-      statusMap: {
-        0: 'available',
-        1: 'renting',
-        2: 'in maintenance'
-      }
-    }
-  },
-  methods: {
-    detail (index) {
-      this.$Message.success('detail is coming ~ ')
     },
-    booking (index) {
-      let carId = this.tableData[index].index
-    }
-  },
-  created () {
-    getCarList().then(
-      (res) => {
-        if (res.code === 200) {
-          this.tableData = res.data.list
-        } else {
+    methods: {
+        booking(item) {
+            const { id } = item
+            this.$router.push({
+                path: '/car/booking',
+                query: {
+                    carId: id
+                }
+            })
         }
-      },
-      (err) => {
-        console.log(err)
-      }
-    )
-  }
+    },
+    mounted() {
+        getCarList().then(
+            (res) => {
+                if (res.code === 200) {
+                    this.tableData = res.data.list
+                } else {
+                }
+            },
+            (err) => {
+                console.log(err)
+            }
+        )
+    }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .car-list {
-  widows: 95%;
-  padding-right: 3vw;
+    widows: 95%;
+    padding-right: 3vw;
 }
 </style>

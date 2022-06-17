@@ -35,7 +35,7 @@ service.interceptors.response.use(
 		const dataAxios = response.data
 		// 这个状态码是和后端约定的
 		// const code = dataAxios.reset
-		if (dataAxios.code !== 200) {
+		if (dataAxios.code === 1005 || dataAxios.code === 1006) {
 			window.location.href = '#/login'
 		}
 		return dataAxios
