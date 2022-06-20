@@ -96,7 +96,7 @@
         order by id desc
     </select>
 
-    <select id="getOrderByCarId" resultMap="carBookingOrderMap">
+    <select id="getActiveOrderByCarId" resultMap="carBookingOrderMap">
         select id, car_id, user_id, start_time, estimated_end_time, actual_end_time, status
         from car_booking_order
         where car_id = #{carId}

@@ -21,5 +21,5 @@ public interface CarBookingOrderDao {
 
     List<CarBookingOrderVo> getOrderVoByUserId(Long userId);
 
-    List<CarBookingOrder> getOrderByCarId(Long carId, LocalDate startDate);
+    List<CarBookingOrder> getActiveOrderByCarId(Long carId, LocalDate startDate);
 }

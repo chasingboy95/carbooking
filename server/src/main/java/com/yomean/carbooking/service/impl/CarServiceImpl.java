@@ -36,6 +36,10 @@ public class CarServiceImpl implements CarService {
     }
 
     public Car getById(Long id) {
-        return carDao.getByIdInShareMode(id);
+        return carDao.getById(id);
+    }
+
+    public Car getByIdWithLock(Long id) {
+        return carDao.getByIdWithLock(id);
     }
 }

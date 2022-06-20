@@ -16,4 +16,6 @@ public interface CarService {
     PageInfo<Car> queryCars(CarQC qc, PageParam page);
 
     Car getById(Long id);
+
+    Car getByIdWithLock(Long id);
 }

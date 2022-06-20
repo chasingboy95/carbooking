@@ -40,19 +40,18 @@ public class CarBookingServiceImpl implements CarBookingService {
         if (carBookingOrder.getEstimatedEndTime().isBefore(LocalDate.now())) {
             throw new ServiceException(ReturnCode.START_TIME_IS_AFTER_END_TIME);
         }
-        Car car = carService.getById(carBookingOrder.getCarId());
+        // try to add lock on record
+        Car car = carService.getByIdWithLock(carBookingOrder.getCarId());
         User user = userService.getById(carBookingOrder.getUserId());
         if (Objects.isNull(car)) {
             throw new ServiceException(ReturnCode.EMPTY_CAR);
         }
+//        if (car.getStatus() != 0) { // other thread are modify
+//            throw new ServiceException(ReturnCode.SYSTEM_BUSY_TRY_LATE);
+//        }
         if (Objects.isNull(user)) {
             throw new ServiceException(ReturnCode.EMPTY_USER);
         }
-//        if (car.getStatus() != 0) {
-//            throw new ServiceException(ReturnCode.BEEN_BOOKED);
-//        }
-//        car.setStatus(1);
-        carService.updateCar(car);
         carBookingOrder.setStatus(1);
         int add = carBookingOrderDao.add(carBookingOrder);
         return add > 0;
@@ -85,15 +84,12 @@ public class CarBookingServiceImpl implements CarBookingService {
     @Transactional(rollbackFor = Exception.class)
     public boolean finishRentalOrder(Long id) {
         CarBookingOrder bookingOrder = carBookingOrderDao.getById(id);
-        Car car = carService.getById(bookingOrder.getCarId());
         if (bookingOrder.getStatus() == 2) {
             throw new ServiceException(ReturnCode.FINISHED_ORDER);
         }
         bookingOrder.setStatus(2);
         bookingOrder.setActualEndTime(LocalDate.now());
         carBookingOrderDao.update(bookingOrder);
-//        car.setStatus(0);
-        carService.updateCar(car);
         return true;
     }
 
@@ -125,7 +121,7 @@ public class CarBookingServiceImpl implements CarBookingService {
 
     @Override
     public List<CarBookingOrder> getOrderByCarId(Long carId) {
-        return carBookingOrderDao.getOrderByCarId(carId, LocalDate.now());
+        return carBookingOrderDao.getActiveOrderByCarId(carId, LocalDate.now());
     }
 
 

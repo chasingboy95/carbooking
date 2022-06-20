@@ -15,5 +15,7 @@ public interface CarDao {
 
     List<Car> query(CarQC qc);
 
-    Car getByIdInShareMode(Long id);
+    Car getById(Long id);
+
+    Car getByIdWithLock(Long id);
 }

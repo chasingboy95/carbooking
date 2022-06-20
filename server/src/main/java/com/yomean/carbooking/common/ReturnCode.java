@@ -15,6 +15,7 @@ public enum ReturnCode {
     TIME_IS_BEFORE_NOW(1007, "time can't before now"),
     START_TIME_IS_AFTER_END_TIME(1008, "start time can't after end time"),
     EMPTY_ID_OR_PASSWORD(1009, "user id or password cant be empty"),
+    SYSTEM_BUSY_TRY_LATE(1010, "system is busy now, try this late"),
     ;
 
     private Integer code;

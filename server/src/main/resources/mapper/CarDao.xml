@@ -54,10 +54,16 @@
         </where>
     </select>
 
-    <select id="getByIdInShareMode" resultMap="carMap">
+    <select id="getById" resultMap="carMap">
         select id, name, brand_id, plate_number, price, status, created_at
         from car
-        where id = #{id} lock in share mode
+        where id = #{id}
+    </select>
+
+    <select id="getByIdWithLock" resultMap="carMap">
+        select id, name, brand_id, plate_number, price, status, created_at
+        from car
+        where id = #{id} for update
     </select>
 
 </mapper>
