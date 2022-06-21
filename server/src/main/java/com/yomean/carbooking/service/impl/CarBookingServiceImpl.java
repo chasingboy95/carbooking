@@ -42,6 +42,13 @@ public class CarBookingServiceImpl implements CarBookingService {
         }
         // try to add lock on record
         Car car = carService.getByIdWithLock(carBookingOrder.getCarId());
+        List<LocalDate> bookedData = getBookedData(carBookingOrder.getCarId());
+        for (LocalDate date : bookedData) {
+            if ((date.isAfter(carBookingOrder.getStartTime()) || date.equals(carBookingOrder.getStartTime()))
+                    && date.isBefore(carBookingOrder.getEstimatedEndTime()) || date.equals(carBookingOrder.getEstimatedEndTime())) {
+                throw new ServiceException(ReturnCode.TIME_BOOKED);
+            }
+        }
         User user = userService.getById(carBookingOrder.getUserId());
         if (Objects.isNull(car)) {
             throw new ServiceException(ReturnCode.EMPTY_CAR);
